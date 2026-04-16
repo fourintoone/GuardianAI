@@ -1,0 +1,29 @@
+flowchart TD
+    User["<b>USER (Operator)</b><br>(Dashboard Interaction)"]
+    Frontend["<b>FRONTEND (React)</b><br>- Upload Media<br>- Live Camera Input<br>- Display Alerts/UI"]
+    Backend["<b>BACKEND (Flask API)</b><br>- Request Handling<br>- Data Preprocessing"]
+    
+    FaceRec["<b>Face Recognition</b><br>ArcFace"]
+    ObjDet["<b>Object Detection</b><br>YOLOv8s"]
+    Emotion["<b>Emotion Analysis</b><br>DeepFace"]
+    
+    Audio["<b>Audio Detection Module</b><br>(Librosa Processing)"]
+    
+    ResultAgg["<b>RESULT AGGREGATION LAYER</b><br>- Combine Outputs<br>- Generate Alerts"]
+    JSONResp["<b>JSON RESPONSE TO FRONTEND</b>"]
+    UIVis["<b>UI VISUALIZATION (React)</b><br>- Bounding Boxes<br>- Alerts"]
+
+    User --> Frontend
+    Frontend -- "(Axios - HTTP)" --> Backend
+    
+    Backend --> FaceRec
+    Backend --> ObjDet
+    Backend --> Emotion
+    
+    FaceRec --> Audio
+    ObjDet --> Audio
+    Emotion --> Audio
+    
+    Audio --> ResultAgg
+    ResultAgg --> JSONResp
+    JSONResp --> UIVis

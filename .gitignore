@@ -42,3 +42,9 @@ dataset/
 .env.test.local
 .env.production.local
 
+# Models & Weights
+*.pt
+*.onnx
+
+# Documents
+*.docx

@@ -213,32 +213,6 @@ def analyze_live_object():
     except Exception as e:
         import traceback; traceback.print_exc()
         return jsonify({"success": False, "message": str(e)}), 500
-import os
-
-# ---------------- INITIAL SETUP ----------------
-import cv2
-import time
-import uuid
-import torch
-import librosa
-import numpy as np
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from werkzeug.utils import secure_filename
-from deepface import DeepFace
-
-app = Flask(__name__)
-CORS(app)
-
-# Serve images from uploads directory
-from flask import send_from_directory
-
-@app.route('/uploads/<path:filename>')
-def uploaded_file(filename):
-    return send_from_directory(UPLOAD_FOLDER, filename)
-
-UPLOAD_FOLDER = "uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # ---------------- LOAD YOLOv8 MODEL ----------------
 print("Loading default YOLOv8s model...")
@@ -918,11 +892,6 @@ def analyze_audio():
             error_details["filename"] = getattr(audio, 'filename', 'unknown')
         print(f"Audio analysis error: {error_details}")
         return jsonify(error_details), 500
-
-# ---------------- HEALTH CHECK ----------------
-@app.route("/health", methods=["GET"])
-def health():
-    return jsonify({"status": "ok", "yolov5": True, "deepface": True})
 
 # ----------------HEALTH CHECK & DEBUG ENDPOINTS ----------------
 @app.route("/health", methods=["GET"])
